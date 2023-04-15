@@ -5,7 +5,7 @@ const requestSchema=mongoose.Schema({
     event_id:String,
     creator_id:String,
     player_id:String,
-    status:{enum:['pending','accepted','rejected']},
+    status:String, //accepted,rejected or pending
     player:{
         _id:String,
         email:String,

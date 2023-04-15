@@ -1,11 +1,23 @@
 const Requestmodel=require('../models/request.model')
-
+const Eventmodel=require('../models/event.model')
 
 
 exports.getrequest=async(req,res)=>{
     const {creator_id,event_id}=req.body
+    // console.log('here')
     try{
         const requests=await Requestmodel.find({creator_id,event_id})
+        res.status(200).json({'msg':'Requests found',requests})
+    }catch(err){
+        console.log(err)
+        res.status(400).json({'msg':'Cannot found requests'})
+    }
+}
+exports.getrequestbyplayer=async(req,res)=>{
+    const {player_id,event_id}=req.body
+    // console.log('here')
+    try{
+        const requests=await Requestmodel.find({player_id,event_id})
         res.status(200).json({'msg':'Requests found',requests})
     }catch(err){
         console.log(err)
@@ -38,10 +50,12 @@ exports.createrequest=async(req,res)=>{
 
 exports.updaterequest=async(req,res)=>{
     const {id}=req.params
-    const {creator_id,status}=req.body
+    const {event_id,creator_id,status}=req.body
     const check=await Requestmodel.find({_id:id})
+    // console.log(req.body)
     try{
-        if(creator_id===check.creator_id){
+        // console.log(creator_id,check.)
+        if(creator_id===check[0].creator_id){
             await Requestmodel.findByIdAndUpdate({_id:id},{status})
             res.status(200).json({'msg':'Request updated'})
         }else{

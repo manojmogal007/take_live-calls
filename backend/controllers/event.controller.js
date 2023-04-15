@@ -26,7 +26,7 @@ exports.getsingleevent=async(req,res)=>{
     const {id}=req.params
     try{
         const event=await Eventmodel.find({_id:id})
-        res.status(200).json({'msg':'Events found',event})
+        res.status(200).json({'msg':'Events found','event':event[0]})
     }catch(err){
         console.log(err)
         res.status(400).json({'msg':'Cannot get event'})
@@ -35,10 +35,12 @@ exports.getsingleevent=async(req,res)=>{
 
 exports.updateevent=async(req,res)=>{
     const {id}=req.params
-    const user_id=req.body.user_id
-    const event=await Eventmodel.find({_id:id})
+    const {creator_id}=req.body
+    const event=await Eventmodel.findOne({_id:id})
+    // console.log(req.body)
+    // console.log(event)
     try{
-        if(user_id===event.user_id){
+        if(creator_id===event.creator_id){
             await Eventmodel.findByIdAndUpdate({_id:id},req.body)
             res.status(200).json({'msg':'Event updated'})
         }else{
@@ -65,4 +67,15 @@ exports.deleteevent=async(req,res)=>{
         console.log(err)
         res.status(400).json({'msg':'Cannot delete event'}) 
     }
+}
+
+exports.getuserevents=async(req,res)=>{
+    const {creator_id}=req.body
+   try{
+        const events=await Eventmodel.find({creator_id:creator_id})
+        res.status(200).json({'msg':'Events found',events})
+   }catch(err){
+        console.log(err)
+        res.status(400).json({'msg':'Events fetching error'})
+   } 
 }
