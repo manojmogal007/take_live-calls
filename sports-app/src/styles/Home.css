@@ -1,0 +1,14 @@
+.allevents{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 20px;
+}
+.filters{
+    display: flex;
+    justify-content: center;
+    width: 60%;
+    margin: auto;
+}
+.filters>*{
+    margin: 20px;
+}

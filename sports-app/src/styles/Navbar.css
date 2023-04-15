@@ -1,0 +1,25 @@
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid grey;
+    height: 60px;
+}
+.navbar>div:nth-child(1){
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+}
+.navbar>div:nth-child(2),.navbar>div:nth-child(3){
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+}
+.navbar>div:nth-child(2)>*{
+    margin-right: 20px;
+    color: blue;
+    text-decoration: underline;
+}
+.navbar>div:nth-child(3)>*{
+    margin-right: 20px;
+}
+

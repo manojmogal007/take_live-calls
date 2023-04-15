@@ -1,0 +1,22 @@
+
+.signup{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.signup>div{
+    width: 25%;
+    /* margin: auto; */
+    padding: 20px;
+    /* border: 1px solid red; */
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 15px;
+}
+.signup>div>*{
+    margin-top: 10px;
+}
+.signup h1{
+    font-size: 25px;
+    font-weight: 700;
+}
