@@ -3,9 +3,11 @@ import '../styles/Event.css'
 import { Link } from 'react-router-dom'
 
 const Event = (prop) => {
+  // console.log(prop)
   return (
     <div className='event'>
         <h3>{prop.title}</h3>
+        <p>Game : {prop.game}</p>
         <p>{prop.description}</p>
         <p>Date : {prop.date}</p>
         <p>Time : {prop.starttime} to {prop.endtime}</p>

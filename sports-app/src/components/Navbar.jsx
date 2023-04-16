@@ -22,6 +22,7 @@ const Navbar = ({allevents}) => {
         <div>
             <Link to='/'><h3>Allevents</h3></Link>
             <Link to='/events'><h3>Your events</h3></Link>
+            <Link to='/appliedevents'><h3>Requested events</h3></Link>
         </div>
         <div>
             <p>Hi! {username}</p>

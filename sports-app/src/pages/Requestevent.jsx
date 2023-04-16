@@ -38,27 +38,6 @@ const Requestevent = () => {
             console.log(err)
         })
     }
-    // console.log(id)
-
-    // const fetchrequest=()=>{
-    //     axios({
-    //         url:`${url}/request/getreqbycreator`,
-    //         method:'post',
-    //         headers:{
-    //             Authorization:token
-    //         },
-    //         data:{
-    //             event_id:id
-    //         }
-    //     })
-    //     .then((res)=>{
-    //         // console.log(res)
-    //         setrequests(res.data.resquests)
-    //     })
-    //     .catch((err)=>{
-    //         console.log(err)
-    //     })
-    // }
 
     const handlerequest=()=>{
         if(singleevent.count===singleevent.players){
@@ -80,11 +59,12 @@ const Requestevent = () => {
                 creator_id:singleevent.creator_id,
                 player_id:user._id,
                 status:'pending',
-                player:user
+                player:user,
+                event:singleevent
             }
         })
         .then((res)=>{
-            console.log(res)
+            // console.log(res)
            if(res.data.msg==='Request created'){
             seerequest()
            } 
@@ -104,7 +84,7 @@ const Requestevent = () => {
             }
         })
         .then((res)=>{
-            console.log(res)
+            // console.log(res)
             setrequests(res.data.requests)
         })
         .catch((err)=>{
@@ -112,7 +92,20 @@ const Requestevent = () => {
         })
     }
 
-    
+    const handlebutton=()=>{
+        if(requests[0].status!=='accepted'){
+            toast({
+                title: 'Cannot see all players',
+                description:'You can only see players if your request accepted',
+                status: 'warning',
+                duration: 5000,
+                isClosable: true,
+                position:'top-right'
+              })
+            return;
+        }
+        setsee(!see)
+    }
 
     useEffect(()=>{
         fetchevent()
@@ -153,7 +146,7 @@ const Requestevent = () => {
                                 <p>{el.username}</p>
                             ))
                         }
-                    </div>:<Button onClick={()=>setsee(!see)}>See all participated players</Button>
+                    </div>:requests.length>0&&<Button onClick={handlebutton}>See all participated players</Button>
                 }
             </div>
         </div>

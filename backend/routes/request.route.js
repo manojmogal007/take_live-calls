@@ -7,6 +7,7 @@ const requestRouter=express.Router()
 requestRouter.route('/getall').get(getrequestbyuser)
 requestRouter.route('/createreq').post(createrequest)
 requestRouter.route('/getbyplayer').post(getrequestbyplayer)
+
 requestRouter.use(authentication)
 
 requestRouter.route('/getreqbycreator').post(getrequest)

@@ -1,0 +1,8 @@
+.req{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.req>*{
+    margin: 10px;
+}

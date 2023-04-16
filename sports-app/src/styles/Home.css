@@ -2,6 +2,7 @@
     display: grid;
     grid-template-columns: repeat(4,1fr);
     gap: 20px;
+    margin-top: 20px;
 }
 .filters{
     display: flex;
@@ -11,4 +12,8 @@
 }
 .filters>*{
     margin: 20px;
+}
+h1{
+    font-size: 30px;
+    font-weight: 700;
 }

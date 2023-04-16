@@ -6,6 +6,8 @@ import Home from '../pages/Home'
 import Singleevent from '../pages/Singleevent'
 import Allevents from '../pages/Allevents'
 import Requestevent from '../pages/Requestevent'
+import Appliedevents from '../pages/Appliedevents'
+import Privateroutes from './Privateroutes'
 
 const Allroutes = () => {
   return (
@@ -13,10 +15,11 @@ const Allroutes = () => {
         <Routes>
             <Route path='/signup' element={<Signup/>}></Route>
             <Route path='/login' element={<Login/>}></Route>
-            <Route path='/events' element={<Home/>}></Route>
-            <Route path='/' element={<Allevents/>}></Route>
-            <Route path='/event/:id' element={<Singleevent/>}></Route>
-            <Route path='/event/request/:id' element={<Requestevent/>}></Route>
+            <Route path='/events' element={<Privateroutes><Home/></Privateroutes>}></Route>
+            <Route path='/' element={<Privateroutes><Allevents/></Privateroutes>}></Route>
+            <Route path='/event/:id' element={<Privateroutes><Singleevent/></Privateroutes>}></Route>
+            <Route path='/event/request/:id' element={<Privateroutes><Requestevent/></Privateroutes>}></Route>
+            <Route path='/appliedevents' element={<Privateroutes><Appliedevents/></Privateroutes>}></Route>
         </Routes>
     </div>
   )

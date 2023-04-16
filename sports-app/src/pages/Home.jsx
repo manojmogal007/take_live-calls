@@ -36,6 +36,7 @@ const Home = () => {
         <div>
             <Navbar allevents={allevents}/>
         </div>
+        <h1>All your created events</h1>
         <div className='allevents'>
           {
             events?.map((el)=>(

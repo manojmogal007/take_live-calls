@@ -6,6 +6,7 @@ const Allevent = (prop) => {
   return (
     <div className='event'>
         <h3>{prop.title}</h3>
+        <p>Game : {prop.game}</p>
         <p>{prop.description}</p>
         <p>Date : {prop.date}</p>
         <p>Time : {prop.starttime} to {prop.endtime}</p>

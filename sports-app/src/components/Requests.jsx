@@ -2,16 +2,18 @@ import { Button, useToast } from '@chakra-ui/react'
 import axios from 'axios'
 import { url } from '../components/url'
 import React, { useState } from 'react'
+import '../styles/Requests.css'
+import Counter from './Counter'
 
-const Requests = (prop) => {
+const Requests = ({el,event}) => {
 
     const token=localStorage.getItem('token')
     const user=JSON.parse(localStorage.getItem('user'))
     const toast=useToast()
-    // console.log(prop.count,prop.total_players)
+    // console.log(el,event)
 
     const handleaccept=()=>{
-        if(prop.count===prop.total_players){
+        if(event.count===event.players){
             toast({
                 title: 'Players limit full',
                 status: 'warning',
@@ -23,17 +25,26 @@ const Requests = (prop) => {
         }
         axios({
             method:'patch',
-            url:`${url}/request/updatereq/${prop.request_id}`,
+            url:`${url}/request/updatereq/${el._id}`,
             headers:{
                 Authorization:token
             },
             data:{
+                event_id:event._id,
                 status:'accepted',
+                // event:event
             }
         })
         .then((res)=>{
-            console.log(res)
+            // console.log(res)
             if(res.data.msg==='Request updated'){
+                toast({
+                    title: 'Request accepted',
+                    status: 'success',
+                    duration: 3000,
+                    isClosable: true,
+                    position:'top-right'
+                  })
                 handelpayercount()
             }
         })
@@ -45,7 +56,7 @@ const Requests = (prop) => {
     const handlereject=()=>{
         axios({
             method:'patch',
-            url:`${url}/request/updatereq/${prop.request_id}`,
+            url:`${url}/request/updatereq/${el._id}`,
             headers:{
                 Authorization:token
             },
@@ -54,7 +65,16 @@ const Requests = (prop) => {
             }
         })
         .then((res)=>{
-            console.log(res)
+            // console.log(res)
+            if(res.data.msg==='Request updated'){
+                toast({
+                    title: 'Request rejected',
+                    status: 'success',
+                    duration: 3000,
+                    isClosable: true,
+                    position:'top-right'
+                  })
+                }
         })
         .catch((err)=>{
             console.log(err)
@@ -65,13 +85,13 @@ const Requests = (prop) => {
         
         axios({
             method:'patch',
-            url:`${url}/event/update/${prop.event_id}`,
+            url:`${url}/event/update/${el.event_id}`,
             headers:{
                 Authorization:token
             },
             data:{
-                count:prop.count+1,
-                playerdetails:[...prop.playerdetails,prop.player]
+                count:event.count+1,
+                playerdetails:[...event.playerdetails,el.player]
             }
         })
         .then((res)=>{
@@ -82,10 +102,12 @@ const Requests = (prop) => {
         })
     }
   return (
-    <div>
-        <p>{prop.player.username}</p>
-        <Button onClick={handleaccept}>Accept</Button>
-        <Button onClick={handlereject}>Reject</Button>
+    <div className='req'>
+        {/* <Counter el={el} event={event} /> */}
+        <p>Playername : {el.player.username}</p>
+        <Button isDisabled={el.status==='accepted'||el.status==='rejected'?true:false} onClick={handleaccept}>Accept</Button>
+        <Button isDisabled={el.status==='accepted'||el.status==='rejected'?true:false} onClick={handlereject}>Reject</Button>
+        <p>Status : {el.status}</p>
     </div>
   )
 }

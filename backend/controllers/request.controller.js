@@ -17,8 +17,14 @@ exports.getrequestbyplayer=async(req,res)=>{
     const {player_id,event_id}=req.body
     // console.log('here')
     try{
-        const requests=await Requestmodel.find({player_id,event_id})
-        res.status(200).json({'msg':'Requests found',requests})
+        if(player_id&&event_id){
+            const requests=await Requestmodel.find({player_id,event_id})
+            res.status(200).json({'msg':'Requests found',requests})
+        }else{
+            // console.log(player_id)
+            const requests=await Requestmodel.find({player_id})
+            res.status(200).json({'msg':'Requests found',requests})
+        }
     }catch(err){
         console.log(err)
         res.status(400).json({'msg':'Cannot found requests'})
@@ -56,7 +62,7 @@ exports.updaterequest=async(req,res)=>{
     try{
         // console.log(creator_id,check.)
         if(creator_id===check[0].creator_id){
-            await Requestmodel.findByIdAndUpdate({_id:id},{status})
+            await Requestmodel.findByIdAndUpdate({_id:id},req.body)
             res.status(200).json({'msg':'Request updated'})
         }else{
             res.status(200).json({'msg':'Not authorized'})

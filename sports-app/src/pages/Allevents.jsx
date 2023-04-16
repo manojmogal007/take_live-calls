@@ -10,7 +10,9 @@ const Allevents = () => {
 
   const token=localStorage.getItem('token')
   const  [events,setevents]=useState([])
-  // console.log(token)
+  const [title,settitle]=useState('')
+  const [game,setgame]=useState(null)
+  // console.log(events)
 
   const allevents=()=>{
     axios({
@@ -26,18 +28,40 @@ const Allevents = () => {
     })
   }
 
+  const handlefilter=(e)=>{
+    if(e.target.value==='all'){
+      setgame(null)
+      return;
+    }
+    const games=events.filter((el)=>el.game===e.target.value)
+    // console.log(games)
+    setgame(games)
+  }
+
+  const handlechangetitle=(e)=>{
+    settitle(e.target.value)
+  }
+
+  const handlesearch=(e)=>{
+    const games=events.filter((el)=>title===el.title)
+    // console.log(games)
+    setgame(games)
+  }
+
   useEffect(()=>{
     allevents()
   },[])
   return (
     <div className='home'>
+      
         <div>
             <Navbar allevents={allevents}/>
         </div>
         <div className='filters'>
-            <Input/>
-            <Button pl='25px' pr='25px' colorScheme='blue'>Search</Button>
-            <Select >
+            <Input placeholder='Search event' value={title} onChange={handlechangetitle}/>
+            <Button pl='25px' pr='25px' colorScheme='blue' onClick={handlesearch}>Search</Button>
+            <Select placeholder='Filter by game'  onChange={handlefilter}>
+                  <option value='all' >All</option>
                   <option value='cricket'>Cricket</option>
                   <option value='football'>Football</option>
                   <option value='tenis'>Tenis</option>
@@ -46,9 +70,15 @@ const Allevents = () => {
                   <option value='hockey'>Hockey</option>
             </Select>
         </div>
+        <h1>All events</h1>
         <div className='allevents'>
           {
-            events?.map((el)=>(
+            game===null&&events?.map((el)=>(
+              <Allevent key={el._id} {...el}/>
+            ))
+          }
+          {
+            game!==null&&game?.map((el)=>(
               <Allevent key={el._id} {...el}/>
             ))
           }

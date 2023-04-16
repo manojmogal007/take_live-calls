@@ -6,7 +6,7 @@ const eventSchema=mongoose.Schema({
     description:String,
     starttime:String,
     endtime:String,
-    date:Date,
+    date:String,
     players:Number,
     creator_id:String,
     count:Number,
